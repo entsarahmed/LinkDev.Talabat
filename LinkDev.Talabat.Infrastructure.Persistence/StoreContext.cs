@@ -19,6 +19,15 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
         
         }
 
+        public async Task InitializeAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task SeedAsync()
+        {
+            throw new NotImplementedException();
+        }
 
         public DbSet<Product> products { get; set; }
         public DbSet<ProductBrand> Brands { get; set; }
