@@ -1,4 +1,5 @@
 ﻿
+using LinkDev.Talabat.Core.Domain.Common;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,8 @@ namespace LinkDev.Talabat.Core.Domain.Contracts
 {
     public interface IUnitOfWork:IAsyncDisposable
     {
-        public IGenericRepository<Product,int> ProductRepository { get;}
-        public IGenericRepository<ProductBrand, int> BrandsRepository { get;}
-        public IGenericRepository<ProductCategory, int> CategoriesProductRepository { get;}
-
+        IGenericRepository<TEntity, TKey> GetRepository<TEntity,TKey>()
+        where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>;
         Task<int>CompleteAsync();
 
     }
