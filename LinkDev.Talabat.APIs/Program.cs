@@ -1,12 +1,23 @@
 
+using LinkDev.Talabat.APIs.Extensions;
+using LinkDev.Talabat.Infrastructure.Persistence;
+using LinkDev.Talabat.Infrastructure.Persistence.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+
 namespace LinkDev.Talabat.APIs
 {
     public class Program
     {
-        public static void Main(string[] args)
+       // public static StoreContext StoreContext { get; set; } = null!;
+        // Entry Point
+        public static async Task Main(string[] args)
         {
-            var webApplicationBuilder = WebApplication.CreateBuilder(args);
 
+            var webApplicationBuilder = WebApplication.CreateBuilder(args);
+            
+            
             #region Configure Services
             // Add services to the container.
 
@@ -18,11 +29,40 @@ namespace LinkDev.Talabat.APIs
             webApplicationBuilder.Services.AddEndpointsApiExplorer();
             webApplicationBuilder.Services.AddSwaggerGen();
 
+
+            webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
+            //DependenecyInjection.AddPersistenceServices(webApplicationBuilder.Services,webApplicationBuilder.Configuration);
+            #endregion
+
+            var app = webApplicationBuilder.Build();
+
+            #region implicitly want to clr create object from class DbContext
+            ////try
+            ////{
+            ////    var PendingMigrations = StoreContext.Database.GetPendingMigrations();
+
+            ////    if(PendingMigrations.Any()) 
+            ////          await  StoreContext.Database.MigrateAsync(); //Update-Database
+            ////}
+            ////catch(Exception ex) 
+            ////{
+
+            ////}
+            ////finally
+            ////{
+            //// await   StoreContext.DisposeAsync();
+            ////} 
+            #endregion
+
+
+            #region Database Initialization
+
+          await  app.InitializerStoreContextAsync();
+
             #endregion
 
 
             #region Cofigure Kestrel Middleware
-            var app = webApplicationBuilder.Build();
 
             // Configure the HTTP request pipeline.
 
