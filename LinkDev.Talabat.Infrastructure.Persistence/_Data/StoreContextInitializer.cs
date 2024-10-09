@@ -31,7 +31,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data
         {
             if (!_dbContext.Brands.Any())
             {
-                var brandData = await File.ReadAllTextAsync("F:\\route.net\\course\\API\\Session01\\Demo\\LinkDev.Talabat\\LinkDev.Talabat.Infrastructure.Persistence\\Seeds\\brands.json");   //("../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/brands.json");                var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandData);
+                var brandData = await File.ReadAllTextAsync("../LinkDev.Talabat.Infrastructure.Persistence/_Data/Seeds/brands.json");              
 
                 var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandData);
                 
