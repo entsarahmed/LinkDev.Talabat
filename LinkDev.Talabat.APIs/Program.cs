@@ -23,7 +23,10 @@ namespace LinkDev.Talabat.APIs
             #region Configure Services
             // Add services to the container.
 
-            webApplicationBuilder.Services.AddControllers();// Register Required Service by ASP.NET Core with APIs to DI Container.
+            webApplicationBuilder.Services
+                .AddControllers()
+                .AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly);
+            // Register Required Service by ASP.NET Core with APIs to DI Container.
                                                             // 
 
 
