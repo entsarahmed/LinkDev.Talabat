@@ -19,7 +19,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Repositories
         //    _storeContext=storeContext;
         //}
         public async Task<IEnumerable<TEntity>> GetAllAsync(bool WithNoTracking = false)
-        => WithNoTracking? await _dbContext.Set<TEntity>().ToListAsync() : await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
+        => WithNoTracking? await _dbContext.Set<TEntity>().ToListAsync() : await _dbContext.Set<TEntity>().AsNoTrackingWithIdentityResolution().ToListAsync();
     
     //{
     //    if (WithNoTracking)

@@ -26,7 +26,11 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
 
         public async Task InitializeAsync()
         {
-            throw new NotImplementedException();
+            // This will apply any pending migrations
+            if (Database.GetPendingMigrations().Any())
+            {
+                await Database.MigrateAsync();
+            }
         }
 
         public async Task SeedAsync()

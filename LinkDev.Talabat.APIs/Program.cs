@@ -1,12 +1,14 @@
 
 using LinkDev.Talabat.APIs.Extensions;
 using LinkDev.Talabat.APIs.Service;
+using LinkDev.Talabat.Core.Application;
 using LinkDev.Talabat.Core.Application.Abstraction;
 using LinkDev.Talabat.Infrastructure.Persistence;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace LinkDev.Talabat.APIs
 {
@@ -40,6 +42,11 @@ namespace LinkDev.Talabat.APIs
 
             webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
             //DependenecyInjection.AddPersistenceServices(webApplicationBuilder.Services,webApplicationBuilder.Configuration);
+
+            webApplicationBuilder.Services.AddApplicationServices();
+            
+
+
             #endregion
 
             var app = webApplicationBuilder.Build();
