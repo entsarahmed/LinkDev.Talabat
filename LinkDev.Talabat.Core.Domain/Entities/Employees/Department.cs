@@ -11,5 +11,6 @@ namespace LinkDev.Talabat.Core.Domain.Entities.Employees
     {
         public required string  Name { get; set; }
         public DateOnly CreationDate { get; set; }
+        //public object Employees { get; set; }
     }
 }
