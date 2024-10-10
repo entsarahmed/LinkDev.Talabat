@@ -14,10 +14,21 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Products
 
         public ProductWithBrandAndCategorySpecifications():base()
         {
-
-            Includes.Add(P => P.Brand!);
-            Includes.Add(P =>  P.Category!);
+            AddInclude();
         }
-       
+
+        private void AddInclude()
+        {
+            Includes.Add(P => P.Brand!);
+            Includes.Add(P => P.Category!);
+        }
+
+        //The Spec Object Created via this Constructor is used for building the query that will Get a Specific Product
+
+        public ProductWithBrandAndCategorySpecifications(int id):base(id) 
+        {
+            AddInclude();
+
+        }
     }
 }
