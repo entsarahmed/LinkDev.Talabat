@@ -1,10 +1,14 @@
 
 using LinkDev.Talabat.APIs.Extensions;
+using LinkDev.Talabat.APIs.Service;
+using LinkDev.Talabat.Core.Application;
+using LinkDev.Talabat.Core.Application.Abstraction;
 using LinkDev.Talabat.Infrastructure.Persistence;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace LinkDev.Talabat.APIs
 {
@@ -21,17 +25,28 @@ namespace LinkDev.Talabat.APIs
             #region Configure Services
             // Add services to the container.
 
-            webApplicationBuilder.Services.AddControllers();// Register Required Service by ASP.NET Core with APIs to DI Container.
+            webApplicationBuilder.Services
+                .AddControllers()
+                .AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly);
+            // Register Required Service by ASP.NET Core with APIs to DI Container.
                                                             // 
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            webApplicationBuilder.Services.AddEndpointsApiExplorer();
-            webApplicationBuilder.Services.AddSwaggerGen();
+            webApplicationBuilder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
+
+
+            webApplicationBuilder.Services.AddHttpContextAccessor();
+            webApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService),typeof(LoggedInUserService));
 
 
             webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
             //DependenecyInjection.AddPersistenceServices(webApplicationBuilder.Services,webApplicationBuilder.Configuration);
+
+            webApplicationBuilder.Services.AddApplicationServices();
+            
+
+
             #endregion
 
             var app = webApplicationBuilder.Build();
