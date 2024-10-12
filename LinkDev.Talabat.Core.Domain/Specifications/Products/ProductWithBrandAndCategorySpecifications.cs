@@ -12,7 +12,7 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Products
     {
         //The Spec Object Created via this Constructor is used for building the query that will Get all product
 
-        public ProductWithBrandAndCategorySpecifications(string? sort, int? brandId, int? categoryId) 
+        public ProductWithBrandAndCategorySpecifications(string? sort, int? brandId, int? categoryId,int pageSize, int pageIndex) 
             : base(
                   P => 
                   (!brandId.HasValue || P.BrandId == brandId.Value)
@@ -41,7 +41,12 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Products
                         AddOrderBy(P => P.Name);
                         break;
                 }
-            
+
+            // totalProducts = 18  ~ 20
+            // pageSize      = 5
+            //pageIndex      = 1
+
+            ApplyPagination(pageSize *(pageIndex - 1), pageSize);
             
         }
 

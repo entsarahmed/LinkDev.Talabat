@@ -13,14 +13,13 @@ namespace LinkDev.Talabat.Core.Domain.Contracts
         where TKey : IEquatable<TKey>
     {
         public Expression<Func<TEntity,bool>>? Criteria { get; set; } // P => P.Id == 1
-    
-    
     public List<Expression<Func<TEntity, object>>> Includes { get; set; }
-
-
-
         public Expression<Func<TEntity, object>>? OrderBy { get; set; } 
-        public Expression<Func<TEntity,object>>? OrderByDesc { get; set; } 
+        public Expression<Func<TEntity,object>>? OrderByDesc { get; set; }
+
+        public int Skip { get; set; }
+        public int Take { get; set; }
+        public bool IsPaginationEnabled { get; set; }
 
 
     }
