@@ -12,12 +12,17 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Products
     {
         //The Spec Object Created via this Constructor is used for building the query that will Get all product
 
-        public ProductWithBrandAndCategorySpecifications(string? sort):base()
+        public ProductWithBrandAndCategorySpecifications(string? sort, int? brandId, int? categoryId) 
+            : base(
+                  P => 
+                  (!brandId.HasValue || P.BrandId == brandId.Value)
+                     &&
+                  (!categoryId.HasValue || P.CategoryId == categoryId.Value)
+                  
+                  )
         {
             AddInclude();
-            AddOrderBy(P => P.Name); //Default
-            if(!string.IsNullOrEmpty(sort))
-            {
+            
                 switch(sort)
                 {
                     case "nameDesc":
@@ -36,7 +41,7 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Products
                         AddOrderBy(P => P.Name);
                         break;
                 }
-            }
+            
             
         }
 
