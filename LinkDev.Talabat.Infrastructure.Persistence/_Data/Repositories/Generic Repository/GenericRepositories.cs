@@ -36,10 +36,6 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Repositories
         {
     
             return await _dbContext.Set<TEntity>().FindAsync(id);
-
-
-
-
         }
 
 

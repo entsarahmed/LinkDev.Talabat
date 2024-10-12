@@ -17,10 +17,15 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data.Repositories.Generic_
         {
             var query = inputQuery; //_dbContext.Set<TEntity>()
 
-            if (spec.Criteria is not null) // P => P.Id.Equals(1)
+            if (spec.Criteria is not null) // 
                 query=query.Where(spec.Criteria);
 
-            //query =_dbContext.Set<Product>().where(P => P.Id.Equals(1))
+            //query =_dbContext.Set<Product>()
+
+            if(spec.OrderByDesc is not null)    
+                query=query.OrderByDescending(spec.OrderByDesc);
+            else if (spec.OrderBy is not null)
+                query=query.OrderBy(spec.OrderBy);
             //include expressions
             //1. P => P.Brand
             //2. P => P.Category
@@ -28,9 +33,9 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data.Repositories.Generic_
 
             query = spec.Includes.Aggregate(query, (currentQuery, IncludeExpression) => currentQuery.Include(IncludeExpression));
 
-            //query =_dbContext.Set<Product>().where(P => P.Id.Equals(1)).Include(P => P.Brand)
+            //query =_dbContext.Set<Product>().OrderBy(P.P.Price).Include(P => P.Brand)
 
-            //            //query =_dbContext.Set<Product>().where(P => P.Id.Equals(1)).Include(P => P.Brand).Include(P => P.Category)
+            // //query =_dbContext.Set<Product>().OrderBy(P => P.Price).Include(P => P.Brand).Include(P => P.Category)
 
             return query;
         }

@@ -39,9 +39,9 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
             }
         }
 
-        public async Task SeedAsync()
+        public   async Task SeedAsync()
         {
-            throw new NotImplementedException();
+             throw new NotImplementedException();
         }
     }
 }

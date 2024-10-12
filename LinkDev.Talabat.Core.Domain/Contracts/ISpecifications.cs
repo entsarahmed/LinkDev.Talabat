@@ -16,6 +16,12 @@ namespace LinkDev.Talabat.Core.Domain.Contracts
     
     
     public List<Expression<Func<TEntity, object>>> Includes { get; set; }
-    
+
+
+
+        public Expression<Func<TEntity, object>>? OrderBy { get; set; } 
+        public Expression<Func<TEntity,object>>? OrderByDesc { get; set; } 
+
+
     }
 }
