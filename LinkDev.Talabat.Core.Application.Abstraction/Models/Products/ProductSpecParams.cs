@@ -8,13 +8,20 @@ namespace LinkDev.Talabat.Core.Application.Abstraction.Models.Products
 {
     public class ProductSpecParams
     {
+        private string? search;
+        private const int MaxPageSize = 10;
+        private int pageSize = 5;
+        public int PageIndex { get; set; } = 1;
         public string? Sort { get; set; }
         public int? BrandId { get; set; }
         public int? CategoryId { get; set; }
-        public int PageIndex { get; set; } = 1;
 
-        private const int MaxPageSize = 10;
-        private int pageSize = 5;
+
+        public string? Search
+        {
+            get { return search; }
+            set { search = value?.ToUpper(); }
+        }
 
         public int PageSize
         {
@@ -22,6 +29,8 @@ namespace LinkDev.Talabat.Core.Application.Abstraction.Models.Products
             get { return pageSize; } 
             set { pageSize = value > MaxPageSize ? MaxPageSize : value; }  
         }
+
+
 
 
     }
