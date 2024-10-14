@@ -90,6 +90,7 @@ namespace LinkDev.Talabat.APIs
                 app.UseSwaggerUI();
             }
 
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
            // app.UseAuthorization();

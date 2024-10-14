@@ -36,10 +36,6 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Repositories
         {
     
             return await _dbContext.Set<TEntity>().FindAsync(id);
-
-
-
-
         }
 
 
@@ -49,11 +45,18 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Repositories
 
         }
 
+
+
+
         public async Task<TEntity?> GetWithSpecAsync(ISpecifications<TEntity, TKey> spec)
         {
             return await ApplySpecifications(spec).FirstOrDefaultAsync();
         }
 
+
+        public async Task<int> GetCountAsync(ISpecifications<TEntity, TKey> spec)
+        {
+            return await ApplySpecifications(spec).CountAsync();        }
         public async Task AddAsync(TEntity entity) => await _dbContext.Set<TEntity>().AddAsync(entity);
 
 
@@ -68,6 +71,8 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Repositories
         {
             return SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbContext.Set<TEntity>(), spec);
         }
+
+        
         #endregion
 
 

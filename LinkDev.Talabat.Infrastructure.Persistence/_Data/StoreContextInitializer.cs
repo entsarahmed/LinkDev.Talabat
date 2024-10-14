@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data
 {
-    internal class StoreContextInitializer(StoreContext _dbContext) : IStoreContextInitializer
+    public class StoreContextInitializer(StoreContext _dbContext) : IStoreContextInitializer
     {
         //private readonly StoreContext _dbContext;
 
@@ -50,7 +50,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data
 
             if (!_dbContext.categories.Any())
             {
-                var categoryData = await File.ReadAllTextAsync("F:\\route.net\\course\\API\\Session01\\Demo\\LinkDev.Talabat\\LinkDev.Talabat.Infrastructure.Persistence\\Seeds\\categories.json");   //("../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/brands.json");                var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandData);
+                var categoryData = await File.ReadAllTextAsync("../LinkDev.Talabat.Infrastructure.Persistence/_Data/Seeds/categories.json");//("F:\\route.net\\course\\API\\Session01\\Demo\\LinkDev.Talabat\\LinkDev.Talabat.Infrastructure.Persistence\\Seeds\\categories.json");   //("../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/brands.json");                var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandData);
 
                 var categories = JsonSerializer.Deserialize<List<ProductCategory>>(categoryData);
 
@@ -67,7 +67,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data
 
             if (!_dbContext.products.Any())
             {
-                var productData = await File.ReadAllTextAsync("F:\\route.net\\course\\API\\Session01\\Demo\\LinkDev.Talabat\\LinkDev.Talabat.Infrastructure.Persistence\\Seeds\\products.json");   //("../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/brands.json");                var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandData);
+                var productData = await File.ReadAllTextAsync("../LinkDev.Talabat.Infrastructure.Persistence/_Data/Seeds/products.json");//("F:\\route.net\\course\\API\\Session01\\Demo\\LinkDev.Talabat\\LinkDev.Talabat.Infrastructure.Persistence\\Seeds\\products.json");   //("../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/brands.json");                var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandData);
 
                 var products = JsonSerializer.Deserialize<List<Product>>(productData);
 
