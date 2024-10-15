@@ -93,7 +93,9 @@ namespace LinkDev.Talabat.APIs
             app.UseStaticFiles();
             app.UseHttpsRedirection();
 
-           // app.UseAuthorization();
+            app.UseAuthentication();
+           app.UseAuthorization();
+            
 
 
             app.MapControllers();
@@ -101,7 +103,9 @@ namespace LinkDev.Talabat.APIs
             #endregion
 
 
+
             app.Run();
+
         }
     }
 }
