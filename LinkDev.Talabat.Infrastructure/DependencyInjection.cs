@@ -16,7 +16,7 @@ namespace LinkDev.Talabat.Infrastructure
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
             {
 
-            services.AddSingleton(typeof(IServiceCollection), (serviceProvider) =>
+            services.AddSingleton(typeof(IConnectionMultiplexer), (serviceProvider) =>
             {
                 var connectionString = configuration.GetConnectionString("Redis");////GetSection("ConnectionStrings")["Redis"];
                 var connectionMultiplexerObj = ConnectionMultiplexer.Connect(connectionString!);
