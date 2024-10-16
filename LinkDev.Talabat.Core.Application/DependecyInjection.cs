@@ -35,7 +35,7 @@ namespace LinkDev.Talabat.Core.Application
                 var configuration = serviceProvider.GetRequiredService<IConfiguration>();
                 var basketRepository = serviceProvider.GetRequiredService<IBasketRepository>();
 
-                return new BasketService(basketRepository,mapper,configuration);
+                return () => new BasketService(basketRepository,mapper,configuration);
             });
             return services;
         }
