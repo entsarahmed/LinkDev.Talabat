@@ -2,6 +2,7 @@
 using LinkDev.Talabat.Core.Application.Abstraction.Common;
 using LinkDev.Talabat.Core.Application.Abstraction.Models.Products;
 using LinkDev.Talabat.Core.Application.Abstraction.Services.Products;
+using LinkDev.Talabat.Core.Application.Exceptions;
 using LinkDev.Talabat.Core.Domain.Contracts;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using LinkDev.Talabat.Core.Domain.Specifications;
@@ -36,6 +37,10 @@ namespace LinkDev.Talabat.Core.Application.Services.Products
             var spec = new ProductWithBrandAndCategorySpecifications(id);
 
             var product = await unitOfWork.GetRepository<Product, int>().GetWithSpecAsync(spec);
+            
+            if (product is null)
+                throw new NotFoundException(nameof(product), id);   
+
             var productToReturn = mapper.Map<ProductToReturnDto>(product);
             return productToReturn;
         }

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinkDev.Talabat.APIs.Controllers.Exceptions
+namespace LinkDev.Talabat.Core.Application.Exceptions
 {
     public class NotFoundException :ApplicationException
     {
-        public NotFoundException()
-            :base("Not Found")
+        public NotFoundException(string name, object key)
+            :base($"{name} with ({key}) is not found")
         {
             
         }
