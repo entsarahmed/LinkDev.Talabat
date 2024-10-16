@@ -1,11 +1,15 @@
 ﻿using LinkDev.Talabat.APIs.Controllers.Base;
 using LinkDev.Talabat.APIs.Controllers.Errors;
+using LinkDev.Talabat.APIs.Controllers.Exceptions;
+using LinkDev.Talabat.Core.Application.Abstraction.Models.Products;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.APIs.Controllers.Controllers.Buggy
@@ -15,14 +19,15 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Buggy
         [HttpGet("notfound")] //GET: /api/buggy/notfound
          public IActionResult GetNotFoundRequest()
         {
+            throw new NotFoundException();
             // return NotFound(new {StatusCode = 404, Message = "Not Found "});//404
-            return NotFound(new ApiResponse(404));
+           // return NotFound(new ApiResponse(404));
         }
 
         [HttpGet("servererror")] //GET: /api/buggy/servererror
         public IActionResult GetServerError()
         {
-            throw new Exception();//500
+            throw new Exception(); // 500
         }
         [HttpGet("badrequest")]  //GET: /api/buggy/badrequest
         public IActionResult GetBadRequest()

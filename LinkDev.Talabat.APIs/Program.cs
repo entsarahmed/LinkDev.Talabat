@@ -1,6 +1,7 @@
 
 using LinkDev.Talabat.APIs.Controllers.Errors;
 using LinkDev.Talabat.APIs.Extensions;
+using LinkDev.Talabat.APIs.Middlewares;
 using LinkDev.Talabat.APIs.Service;
 using LinkDev.Talabat.Core.Application;
 using LinkDev.Talabat.Core.Application.Abstraction;
@@ -110,6 +111,7 @@ namespace LinkDev.Talabat.APIs
             #region Cofigure Kestrel Middleware
 
             // Configure the HTTP request pipeline.
+            app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 
             //check he I exist in which Environment  
             if (app.Environment.IsDevelopment())
@@ -118,6 +120,7 @@ namespace LinkDev.Talabat.APIs
                 // Internary need Service it that is work dependence injection inside Configure Service 
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                //app.UseDeveloperExceptionPage();
             }
 
             app.UseStaticFiles();
