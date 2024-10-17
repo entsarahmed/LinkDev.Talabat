@@ -1,15 +1,13 @@
 
+using LinkDev.Talabat.APIs.Controllers.Errors;
 using LinkDev.Talabat.APIs.Extensions;
+using LinkDev.Talabat.APIs.Middlewares;
 using LinkDev.Talabat.APIs.Service;
 using LinkDev.Talabat.Core.Application;
 using LinkDev.Talabat.Core.Application.Abstraction;
+using LinkDev.Talabat.Infrastructure;
 using LinkDev.Talabat.Infrastructure.Persistence;
-using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using static System.Net.Mime.MediaTypeNames;
-
 namespace LinkDev.Talabat.APIs
 {
     public class Program
@@ -27,10 +25,43 @@ namespace LinkDev.Talabat.APIs
 
             webApplicationBuilder.Services
                 .AddControllers()
+                .ConfigureApiBehaviorOptions( options =>
+                {
+                    options.SuppressModelStateInvalidFilter = false;
+                    options.InvalidModelStateResponseFactory = (actionContext) =>
+                    {
+                        var errors = actionContext.ModelState.Where(P => P.Value!.Errors.Count > 0)
+                                               .Select(P => new ApiValidationErrorResponse.ValidationError()
+                                               {
+                                                   Field = P.Key,
+                                                   Errors= P.Value!.Errors.Select(E => E.ErrorMessage)
+                                               });
+                        
+                        return new BadRequestObjectResult(new ApiValidationErrorResponse()
+                        {
+
+                            Errors = errors
+                        });
+                    };
+                })
                 .AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly);
             // Register Required Service by ASP.NET Core with APIs to DI Container.
-                                                            // 
+            // 
+            //webApplicationBuilder.Services.Configure<ApiBehaviorOptions>(options =>
+            //{
+            //    options.SuppressModelStateInvalidFilter = false;
+            //    options.InvalidModelStateResponseFactory = (actionContext) =>
+            //    {
+            //        var errors = actionContext.ModelState.Where(P => P.Value!.Errors.Count > 0)
+            //                               .SelectMany(P => P.Value!.Errors)
+            //                               .Select(E => E.ErrorMessage);
+            //        return new BadRequestObjectResult(new ApiValidationErrorResponse()
+            //        {
 
+            //            Errors = errors
+            //        });
+            //    };
+            //});
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             webApplicationBuilder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
@@ -44,8 +75,8 @@ namespace LinkDev.Talabat.APIs
             //DependenecyInjection.AddPersistenceServices(webApplicationBuilder.Services,webApplicationBuilder.Configuration);
 
             webApplicationBuilder.Services.AddApplicationServices();
-            
 
+            webApplicationBuilder.Services.AddInfrastructureServices(webApplicationBuilder.Configuration);
 
             #endregion
 
@@ -80,6 +111,7 @@ namespace LinkDev.Talabat.APIs
             #region Cofigure Kestrel Middleware
 
             // Configure the HTTP request pipeline.
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             //check he I exist in which Environment  
             if (app.Environment.IsDevelopment())
@@ -88,12 +120,17 @@ namespace LinkDev.Talabat.APIs
                 // Internary need Service it that is work dependence injection inside Configure Service 
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                //app.UseDeveloperExceptionPage();
             }
 
             app.UseStaticFiles();
             app.UseHttpsRedirection();
 
-           // app.UseAuthorization();
+            app.UseStatusCodePagesWithReExecute("/Errors/{0}");
+
+            app.UseAuthentication();
+           app.UseAuthorization();
+            
 
 
             app.MapControllers();
@@ -101,7 +138,9 @@ namespace LinkDev.Talabat.APIs
             #endregion
 
 
+
             app.Run();
+
         }
     }
 }

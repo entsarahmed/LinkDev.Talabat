@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Castle.Core.Configuration;
+using LinkDev.Talabat.Core.Application.Abstraction.Models.Basket;
 using LinkDev.Talabat.Core.Application.Abstraction.Models.Products;
 using LinkDev.Talabat.Core.Application.Abstraction.Services.Employees;
+using LinkDev.Talabat.Core.Domain.Entities.Basket;
 using LinkDev.Talabat.Core.Domain.Entities.Employees;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using System;
@@ -32,6 +34,11 @@ namespace LinkDev.Talabat.Core.Application.Mapping
 
             CreateMap<Employee, EmployeesToReturnDto>();
             //CreateMap<Department, >
+
+            CreateMap<CustomerBasket, CustomerBasketDto>().ReverseMap();
+            CreateMap<BasketItem, BasketItemDto>().ReverseMap();
+
+
         }
     }
 }
