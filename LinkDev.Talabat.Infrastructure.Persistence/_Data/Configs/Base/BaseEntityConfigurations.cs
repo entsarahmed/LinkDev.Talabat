@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinkDev.Talabat.Infrastructure.Persistence.Configs.Base
+namespace LinkDev.Talabat.Infrastructure.Persistence._Data.Configs.Base
 {
     public class BaseEntityConfigurations<TEntity, TKey> : IEntityTypeConfiguration<TEntity> where TEntity : BaseAuditableEntity<TKey> where TKey : IEquatable<TKey>
     {

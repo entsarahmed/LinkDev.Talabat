@@ -1,4 +1,4 @@
-﻿using LinkDev.Talabat.Infrastructure.Persistence;
+﻿using LinkDev.Talabat.Core.Domain.Contracts;
 
 namespace LinkDev.Talabat.APIs.Extensions
 {
@@ -9,7 +9,7 @@ namespace LinkDev.Talabat.APIs.Extensions
             using var scope = app.Services.CreateAsyncScope();
             var services = scope.ServiceProvider;
 
-            var StoreContextInitializer = services.GetRequiredService<StoreContext>();
+            var storeContextInitializer = services.GetRequiredService<IStoreContextInitializer>();
             //Ask Runtime Env for an Object from "StoreContext" Service Explicitly.
 
             var loggerFactory = services.GetRequiredService<ILoggerFactory>();
@@ -17,8 +17,8 @@ namespace LinkDev.Talabat.APIs.Extensions
 
             try
             {
-                await StoreContextInitializer.InitializeAsync();
-                await StoreContextInitializer.SeedAsync();
+                await storeContextInitializer.InitializeAsync();
+                await storeContextInitializer.SeedAsync();
             }
             catch (Exception ex)
             {
