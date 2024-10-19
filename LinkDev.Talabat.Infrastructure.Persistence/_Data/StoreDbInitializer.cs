@@ -1,28 +1,15 @@
-﻿using LinkDev.Talabat.Core.Domain.Contracts;
+﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence.DbInitializers;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
+using LinkDev.Talabat.Infrastructure.Persistence._Common;
 using System.Text.Json;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence._Data
 {
-    public class StoreDbContextInitializer(StoreDbContext _dbContext) : IStoreContextInitializer
+   internal sealed class StoreDbInitializer(StoreDbContext _dbContext) : DbIntializer(_dbContext),IStoreDbInitializer
     {
-        //private readonly StoreContext _dbContext;
-
-        //public StoreContextInitializer(StoreContext dbContext)
-        //{
-        //    _dbContext=dbContext;
-        //}
-        public async Task InitializeAsync()
+        public override async Task SeedAsync()
         {
-            
-                var PendingMigrations =await _dbContext.Database.GetPendingMigrationsAsync();
 
-                if (PendingMigrations.Any())
-                    await _dbContext.Database.MigrateAsync(); //Update-Database
-           
-            }
-        public async Task SeedAsync()
-        {
             if (!_dbContext.Brands.Any())
             {
                 var brandData = await File.ReadAllTextAsync("../LinkDev.Talabat.Infrastructure.Persistence/_Data/Seeds/brands.json");              
@@ -77,6 +64,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data
 
 
             }
+
         }
     }
 }

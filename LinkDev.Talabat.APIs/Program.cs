@@ -5,8 +5,12 @@ using LinkDev.Talabat.APIs.Middlewares;
 using LinkDev.Talabat.APIs.Service;
 using LinkDev.Talabat.Core.Application;
 using LinkDev.Talabat.Core.Application.Abstraction;
+using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure;
 using LinkDev.Talabat.Infrastructure.Persistence;
+using LinkDev.Talabat.Infrastructure.Persistence.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 namespace LinkDev.Talabat.APIs
 {
@@ -44,24 +48,9 @@ namespace LinkDev.Talabat.APIs
                         });
                     };
                 })
-                .AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly);
-            // Register Required Service by ASP.NET Core with APIs to DI Container.
-            // 
-            //webApplicationBuilder.Services.Configure<ApiBehaviorOptions>(options =>
-            //{
-            //    options.SuppressModelStateInvalidFilter = false;
-            //    options.InvalidModelStateResponseFactory = (actionContext) =>
-            //    {
-            //        var errors = actionContext.ModelState.Where(P => P.Value!.Errors.Count > 0)
-            //                               .SelectMany(P => P.Value!.Errors)
-            //                               .Select(E => E.ErrorMessage);
-            //        return new BadRequestObjectResult(new ApiValidationErrorResponse()
-            //        {
-
-            //            Errors = errors
-            //        });
-            //    };
-            //});
+                .AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly);  // Register Required Service by ASP.NET Core with APIs to DI Container.
+           
+          
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             webApplicationBuilder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
@@ -71,12 +60,36 @@ namespace LinkDev.Talabat.APIs
             webApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService),typeof(LoggedInUserService));
 
 
-            webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
-            //DependenecyInjection.AddPersistenceServices(webApplicationBuilder.Services,webApplicationBuilder.Configuration);
-
             webApplicationBuilder.Services.AddApplicationServices();
-
+            webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
             webApplicationBuilder.Services.AddInfrastructureServices(webApplicationBuilder.Configuration);
+
+            webApplicationBuilder.Services.AddIdentity<ApplicationUser, IdentityRole>((identityOptions) =>
+            {
+                identityOptions.SignIn.RequireConfirmedAccount = true;
+                identityOptions.SignIn.RequireConfirmedEmail = true;
+                identityOptions.SignIn.RequireConfirmedPhoneNumber = true;
+
+                identityOptions.Password.RequireNonAlphanumeric = true;
+                identityOptions.Password.RequiredUniqueChars = 2; //$M@%
+                identityOptions.Password.RequiredLength = 6;
+                identityOptions.Password.RequireDigit = true;
+                identityOptions.Password.RequireLowercase = true;
+                identityOptions.Password.RequireUppercase = true;
+
+                identityOptions.User.RequireUniqueEmail = true;
+                //identityOptions.User.AllowedUserNameCharacters="abcdenkotlog93124568_.+@*$";
+
+                identityOptions.Lockout.AllowedForNewUsers = true;
+                identityOptions.Lockout.MaxFailedAccessAttempts =5;
+                identityOptions.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(12);
+
+                //identityOptions.Stores
+                //identityOptions.Tokens
+                //identityOptions.ClaimsIdentity
+            })
+                .AddEntityFrameworkStores<StoreIdentityDbContext>();
+
 
             #endregion
 
@@ -103,7 +116,7 @@ namespace LinkDev.Talabat.APIs
 
             #region Database Initialization
 
-          await  app.InitializerStoreContextAsync();
+          await  app.InitializerDbAsync();
 
             #endregion
 
@@ -129,7 +142,7 @@ namespace LinkDev.Talabat.APIs
             app.UseStatusCodePagesWithReExecute("/Errors/{0}");
 
             app.UseAuthentication();
-           app.UseAuthorization();
+            app.UseAuthorization();
             
 
 

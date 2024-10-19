@@ -6,7 +6,7 @@ using LinkDev.Talabat.Core.Application.Abstraction.Services.Products;
 using LinkDev.Talabat.Core.Application.Services.Basket;
 using LinkDev.Talabat.Core.Application.Services.Employees;
 using LinkDev.Talabat.Core.Application.Services.Products;
-using LinkDev.Talabat.Core.Domain.Contracts;
+using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;

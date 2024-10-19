@@ -1,15 +1,24 @@
+using LinkDev.Talabat.Infrastructure.Persistence;
+
 namespace LinkDev.Talabat.Dashboard
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            var webApplicationBuilder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            #region Configure Services
+            //webApplicationBuilder.Services.AddControllersWithViews();
+            //webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
 
-            var app = builder.Build();
+            #endregion
+
+
+
+
+            var app = webApplicationBuilder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
