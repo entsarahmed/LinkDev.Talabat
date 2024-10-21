@@ -5,6 +5,7 @@ using LinkDev.Talabat.APIs.Middlewares;
 using LinkDev.Talabat.APIs.Service;
 using LinkDev.Talabat.Core.Application;
 using LinkDev.Talabat.Core.Application.Abstraction;
+using LinkDev.Talabat.Core.Application.Abstraction.Models.Auth;
 using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure;
 using LinkDev.Talabat.Infrastructure.Persistence;
@@ -64,33 +65,7 @@ namespace LinkDev.Talabat.APIs
             webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
             webApplicationBuilder.Services.AddInfrastructureServices(webApplicationBuilder.Configuration);
 
-            webApplicationBuilder.Services.AddIdentity<ApplicationUser, IdentityRole>((identityOptions) =>
-            {
-                identityOptions.SignIn.RequireConfirmedAccount = true;
-                identityOptions.SignIn.RequireConfirmedEmail = true;
-                identityOptions.SignIn.RequireConfirmedPhoneNumber = true;
-
-                identityOptions.Password.RequireNonAlphanumeric = true;
-                identityOptions.Password.RequiredUniqueChars = 2; //$M@%
-                identityOptions.Password.RequiredLength = 6;
-                identityOptions.Password.RequireDigit = true;
-                identityOptions.Password.RequireLowercase = true;
-                identityOptions.Password.RequireUppercase = true;
-
-                identityOptions.User.RequireUniqueEmail = true;
-                //identityOptions.User.AllowedUserNameCharacters="abcdenkotlog93124568_.+@*$";
-
-                identityOptions.Lockout.AllowedForNewUsers = true;
-                identityOptions.Lockout.MaxFailedAccessAttempts =5;
-                identityOptions.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(12);
-
-                //identityOptions.Stores
-                //identityOptions.Tokens
-                //identityOptions.ClaimsIdentity
-            })
-                .AddEntityFrameworkStores<StoreIdentityDbContext>();
-
-
+            webApplicationBuilder.Services.AddIdentityServices(webApplicationBuilder.Configuration);
             #endregion
 
             var app = webApplicationBuilder.Build();
