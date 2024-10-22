@@ -25,7 +25,9 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
                    optionsBuilder
                    .UseLazyLoadingProxies()
                    .UseSqlServer(configuration.GetConnectionString("StoreContext"));
-               }/*, contextLifetime: ServiceLifetime.Scoped, optionsLifetime: ServiceLifetime.Scoped*/); // Select context Life Time, options Life Time
+
+
+        }/*, contextLifetime: ServiceLifetime.Scoped, optionsLifetime: ServiceLifetime.Scoped*/); // Select context Life Time, options Life Time
 
             services.AddScoped(typeof(IStoreDbInitializer), typeof(StoreDbInitializer));
 
