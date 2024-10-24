@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="_Data\Configs\Employees\" />
     <Folder Include="_Identity\Interceptors\" />
     <Folder Include="_Identity\Migrations\" />
     <Folder Include="_Identity\Seeds\" />
