@@ -10,7 +10,7 @@ namespace LinkDev.Talabat.APIs.Extensions
             var services = scope.ServiceProvider;
 
             var storeContextInitializer = services.GetRequiredService<IStoreDbInitializer>();
-            var storeIdentityContextInitializer = services.GetRequiredService<IStoreIdentityDbInitializer>();
+            var IdentityContextInitializer = services.GetRequiredService<IStoreIdentityDbInitializer>();
             //Ask Runtime Env for an Object from "StoreContext" Service Explicitly.
 
 
@@ -22,8 +22,8 @@ namespace LinkDev.Talabat.APIs.Extensions
                 await storeContextInitializer.InitializeAsync();
                 await storeContextInitializer.SeedAsync();
                
-                await storeIdentityContextInitializer.InitializeAsync();
-                await storeIdentityContextInitializer.SeedAsync();
+                await IdentityContextInitializer.InitializeAsync();
+                await IdentityContextInitializer.SeedAsync();
 
 
             }
@@ -34,6 +34,7 @@ namespace LinkDev.Talabat.APIs.Extensions
             }
             return app;
         }
+
 
 
 
