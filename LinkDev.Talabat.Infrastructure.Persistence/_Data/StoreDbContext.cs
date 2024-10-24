@@ -1,5 +1,8 @@
 ﻿using LinkDev.Talabat.Core.Domain.Entities.Employees;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
+using LinkDev.Talabat.Infrastructure.Persistence._Common;
+using LinkDev.Talabat.Infrastructure.Persistence.Identity;
+using System.Reflection;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence._Data
 {
@@ -9,10 +12,10 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data
         public DbSet<ProductBrand> Brands { get; set; }
         public DbSet<ProductCategory> categories { get; set; }
         // DbSet for Employee entity
-        public DbSet<Employee> Employees { get; set; }
+      //  public DbSet<Employee> Employees { get; set; }
 
         // DbSet for Department entity
-        public DbSet<Department> Departments { get; set; }
+       // public DbSet<Department> Departments { get; set; }
 
         public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options)
         {
@@ -20,12 +23,12 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data
 
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            // modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(StoreDbContext).Assembly);
+            base.OnModelCreating(builder);
 
-
+            builder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly,
+                    type => type.GetCustomAttribute<DbContextTypeAttribute>()?.DbContextType == typeof(StoreDbContext));
         }
 
         //public async Task InitializeAsync()
