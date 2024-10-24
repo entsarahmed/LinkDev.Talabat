@@ -63,10 +63,6 @@ namespace LinkDev.Talabat.APIs.Extensions
                          IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
                          ClockSkew = TimeSpan.Zero,
                     };
-                })
-                .AddJwtBearer("Bearer02", (options) =>
-                {
-
                 });
 
 

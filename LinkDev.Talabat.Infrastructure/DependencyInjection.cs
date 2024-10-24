@@ -17,6 +17,13 @@ namespace LinkDev.Talabat.Infrastructure
                 var connectionMultiplexerObj = ConnectionMultiplexer.Connect(connectionString!);
                 return connectionMultiplexerObj;
             });
+            //services.AddScoped(typeof(IConnectionMultiplexer), (_) =>
+            //{
+            //    var connectionString = configuration.GetConnectionString("Redis");
+            //    var connectionMultiplexerObj = ConnectionMultiplexer.Connect(connectionString!);
+            //    return connectionMultiplexerObj;
+            //});
+
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
             return services;
             //services.AddScoped(typeof(IConnectionMultiplexer), typeof(ConnectionMultiplexer));            return services;
