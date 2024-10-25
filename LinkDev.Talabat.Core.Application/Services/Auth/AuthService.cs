@@ -101,7 +101,7 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
     
     private async Task<string> GenerateTokenAsync(ApplicationUser user)
         {
-            var privateClaims = new List<Claim>()
+            var rolesAsClaims = new List<Claim>()
             {
                 new Claim(ClaimTypes.PrimarySid,user.Id),
                 new Claim(ClaimTypes.Email,user.Email!),
@@ -111,7 +111,7 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
            
             var roles = await userManager.GetRolesAsync(user);
             foreach (var role in roles)
-            privateClaims.Add(new Claim(ClaimTypes.Role, role.ToString()));
+            rolesAsClaims.Add(new Claim(ClaimTypes.Role, role.ToString()));
 
             var authKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
 
@@ -119,7 +119,7 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
                 audience: _jwtSettings.Audience,
                 issuer: _jwtSettings.Issuer,
                 expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
-                claims: privateClaims,
+                claims: rolesAsClaims,
                 signingCredentials: new SigningCredentials(authKey, SecurityAlgorithms.HmacSha256)
                 );
             return new JwtSecurityTokenHandler().WriteToken(tokenObj);  
