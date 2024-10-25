@@ -46,8 +46,8 @@ namespace LinkDev.Talabat.APIs.Extensions
 
             Services.AddAuthentication((authenciationOptions) =>
             {
-                authenciationOptions.DefaultAuthenticateScheme = "Bearer";
-                authenciationOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; 
+                authenciationOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                authenciationOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
                 .AddJwtBearer((options) =>
                 {
@@ -58,10 +58,10 @@ namespace LinkDev.Talabat.APIs.Extensions
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
 
+                        ClockSkew = TimeSpan.FromMinutes(0),
                         ValidAudience = configuration["JwtSettings:Audience"],
-                         ValidIssuer = configuration["JwtSettings:Issuer"],
-                         IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
-                         ClockSkew = TimeSpan.Zero,
+                        ValidIssuer = configuration["JwtSettings:Issuer"],
+                        IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
                     };
                 });
 
@@ -73,7 +73,7 @@ namespace LinkDev.Talabat.APIs.Extensions
             });
 
 
-            return Services;       
+            return Services;
 
         }
     }

@@ -51,7 +51,6 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork.UnitOfWork));
 
-           
             return services;
         }
     }
