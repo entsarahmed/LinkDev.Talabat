@@ -43,6 +43,19 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
                 };
 
             var result = await signInManager.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: true);
+            
+            if (result.IsNotAllowed) throw new UnAuthorizedException("Invalid Login") {
+                
+                Errors =new List<string> { "Account not confirmed yet."}
+            };
+            if (result.IsLockedOut) throw new UnAuthorizedException("Invalid Login")
+            {
+                Errors =new List<string> { "Account is locked" }
+            };
+            //if (result.RequiresTwoFactor) throw new UnAuthorizedException("Invalid Login")
+            //{ 
+            //Errors= new List<string> { "Requires Two-Factor Authentication"}
+            //};
             if (!result.Succeeded)
                 throw new UnAuthorizedException("Invalid Login")
                 {
