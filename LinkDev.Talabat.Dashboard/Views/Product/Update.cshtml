@@ -1,14 +1,14 @@
 ﻿@model ProductViewModel
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Update";
 }
 <h1>Edit @Model.Name</h1>
-<form method="post" asp-action="Edit" enctype="multipart/form-data">
+<form method="post" asp-action="Update" enctype="multipart/form-data">
     <input asp-for="PictureUrl" hidden />
     <partial name="CreateEditPartialView" model="Model" />
     <br />
     <br />
-    <input type="submit" value="Edit" class="btn btn-primary" />
+    <input type="submit" value="Update" class="btn btn-primary" />
     <a asp-action="Index" class="btn btn-secondary">back to index</a>
 </form>
 @section Scripts {

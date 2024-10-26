@@ -65,7 +65,7 @@ namespace Talabat.Dashboard.Controllers
 
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Update(int id)
         {
             var product = await _unitOfWork.GetRepository<Product, int>().GetAsync(id);
 
@@ -77,7 +77,7 @@ namespace Talabat.Dashboard.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, ProductViewModel productViewModel)
+        public async Task<IActionResult> Update(int id, ProductViewModel productViewModel)
         {
             if (id != productViewModel.Id)
             {
@@ -85,17 +85,28 @@ namespace Talabat.Dashboard.Controllers
             }
             if (ModelState.IsValid)
             {
-                if (productViewModel.Image
-         != null)
+                if (productViewModel.Image != null)
                 {
-                    PictureSettings.DeleteFile(productViewModel.PictureUrl, "products");
-                    productViewModel.PictureUrl = PictureSettings.UploadFile(productViewModel.Image, "products");
+                    if (productViewModel.PictureUrl != null)
+                    {
+
+                        PictureSettings.DeleteFile(productViewModel.PictureUrl, "products");
+                        productViewModel.PictureUrl = PictureSettings.UploadFile(productViewModel.Image, "products");
+                    }
                 }
                 else
                 {
                     productViewModel.PictureUrl = PictureSettings.UploadFile(productViewModel.Image, "products");
                 }
                 var mappedProduct = _mapper.Map<ProductViewModel, Product>(productViewModel);
+                string userName = User.Identity?.Name ?? "aya.ali";
+                mappedProduct.CreatedBy = userName;
+                mappedProduct.CreatedOn = DateTime.UtcNow;
+                mappedProduct.LastModifiedBy = userName;
+                mappedProduct.LastModifiedOn = DateTime.UtcNow;
+
+
+                mappedProduct.NormalizedName = productViewModel.Name?.ToUpperInvariant();
                 _unitOfWork.GetRepository<Product, int>().Update(mappedProduct);
                 var result = await _unitOfWork.CompleteAsync();
                 if (result > 0)
