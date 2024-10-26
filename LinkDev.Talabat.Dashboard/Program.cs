@@ -1,11 +1,14 @@
 using LinkDev.Talabat.APIs.Extensions;
 using LinkDev.Talabat.APIs.Service;
 using LinkDev.Talabat.Core.Application.Abstraction;
+using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
 using LinkDev.Talabat.Core.Domain.Contracts.Persistence.DbInitializers;
 using LinkDev.Talabat.Core.Domain.Entities.Identity;
+using LinkDev.Talabat.Dashboard.Helpers;
 using LinkDev.Talabat.Infrastructure.Persistence;
 using LinkDev.Talabat.Infrastructure.Persistence._Data;
 using LinkDev.Talabat.Infrastructure.Persistence.Identity;
+using LinkDev.Talabat.Infrastructure.Persistence.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -88,7 +91,8 @@ namespace LinkDev.Talabat.Dashboard
                 //identityOptions.ClaimsIdentity
             })
                 .AddEntityFrameworkStores<StoreIdentityDbContext>();
-
+            webApplicationBuilder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            webApplicationBuilder.Services.AddAutoMapper(typeof(MapsProfile));
             
             #endregion
 

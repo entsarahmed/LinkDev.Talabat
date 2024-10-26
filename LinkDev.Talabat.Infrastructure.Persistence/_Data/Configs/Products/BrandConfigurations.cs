@@ -17,6 +17,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data.Configs.Products
 
             builder.Property(B => B.Name).IsRequired()
                 .HasMaxLength(50);
+            builder.HasIndex(B => B.Name).IsUnique();
         }
     }
 }
