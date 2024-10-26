@@ -6,11 +6,8 @@ using LinkDev.Talabat.Dashboard.Helpers;
 
 //using LinkDev.Talabat.Core.Domain.Products;
 using LinkDev.Talabat.Dashboard.Models;
-//using LinkDev.Talabat.Infrastructure.Persistence.Interceptors;
 using Microsoft.AspNetCore.Mvc;
-//using Microsoft.EntityFrameworkCore.Diagnostics;
-//using Talabat.Dashboard.Helpers;
-//using Talabat.Dashboard.Models;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Talabat.Dashboard.Controllers
 {
@@ -18,15 +15,17 @@ namespace Talabat.Dashboard.Controllers
 								   IMapper _mapper
 								   ) : Controller
 	{
-		public async Task<IActionResult> Index()
-		{
-			var products = await _unitOfWork.GetRepository<Product, int>().GetAllAsync();
-			var mappedProducts = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(products);
+        public async Task<IActionResult> Index()
+        {
+            var products = await _unitOfWork.GetRepository<Product, int>().GetAllAsync();
+            var mappedProducts = _mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(products);
 
-			return View(mappedProducts);
-		}
+            return View(mappedProducts);
+        }
 
-		public IActionResult Create()
+
+
+        public IActionResult Create()
 		{
 			return View();
 		}
@@ -39,18 +38,31 @@ namespace Talabat.Dashboard.Controllers
             {
                 if (productViewModel.Image != null)
                 {
-                    productViewModel.PictureUrl = PictureSettings.UploadFile(productViewModel.Image, "products");
+                    productViewModel.PictureUrl = PictureSettings.UploadFile(productViewModel.Image, "Products");
                 }
                 else
                 {
                     productViewModel.PictureUrl = "images/products/glazed-donuts.png";
                 }
+
                 var mappedProduct = _mapper.Map<ProductViewModel, Product>(productViewModel);
+                string userName = User.Identity?.Name ?? "aya.ali";
+                mappedProduct.CreatedBy = userName;
+                mappedProduct.CreatedOn = DateTime.UtcNow;
+                mappedProduct.LastModifiedBy = userName;
+                mappedProduct.LastModifiedOn = DateTime.UtcNow;
+
+
+                mappedProduct.NormalizedName = productViewModel.Name?.ToUpperInvariant();
+
                 await _unitOfWork.GetRepository<Product, int>().AddAsync(mappedProduct);
                 await _unitOfWork.CompleteAsync();
+
                 return RedirectToAction("Index");
             }
+
             return View(productViewModel);
+
         }
 
         public async Task<IActionResult> Edit(int id)
