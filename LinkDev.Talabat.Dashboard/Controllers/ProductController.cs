@@ -38,7 +38,7 @@ namespace Talabat.Dashboard.Controllers
             {
                 if (productViewModel.Image != null)
                 {
-                    productViewModel.PictureUrl = PictureSettings.UploadFile(productViewModel.Image, "Products");
+                    productViewModel.PictureUrl = PictureSettings.UploadFile(productViewModel.Image, "products");
                 }
                 else
                 {
