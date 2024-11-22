@@ -1,4 +1,5 @@
 ﻿using LinkDev.Talabat.Core.Domain.Entities.Employees;
+using LinkDev.Talabat.Core.Domain.Entities.Orders;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using LinkDev.Talabat.Infrastructure.Persistence._Common;
 using LinkDev.Talabat.Infrastructure.Persistence.Identity;
@@ -11,7 +12,10 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data
         public DbSet<Product> products { get; set; }
         public DbSet<ProductBrand> Brands { get; set; }
         public DbSet<ProductCategory> categories { get; set; }
-       
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
+
         public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options)
         {
 
@@ -25,5 +29,11 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly,
                     type => type.GetCustomAttribute<DbContextTypeAttribute>()?.DbContextType == typeof(StoreDbContext));
         }
+   
+    
+    
+    
+    
+    
     }
 }
