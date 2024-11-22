@@ -13,6 +13,5 @@ namespace LinkDev.Talabat.Core.Domain.Entities.Orders
         public required string City { get; set; }
         public required string Street { get; set; }
         public required string Country { get; set; }
-
     }
 }
