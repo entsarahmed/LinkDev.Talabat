@@ -8,12 +8,6 @@ namespace LinkDev.Talabat.Core.Domain.Entities.Orders
 {
     public class ProductItemOrdered
     {
-        public ProductItemOrdered(int productId, string productName, string pictureUrl)
-        {
-            ProductId=productId;
-            ProductName=productName;
-            PictureUrl=pictureUrl;
-        }
 
         public int ProductId { get; set; }
         public required string ProductName { get; set; }
