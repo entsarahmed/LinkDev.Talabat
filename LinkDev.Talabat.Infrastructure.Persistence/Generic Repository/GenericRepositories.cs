@@ -1,44 +1,26 @@
 ﻿using LinkDev.Talabat.Core.Domain.Common;
 using LinkDev.Talabat.Core.Domain.Contracts;
 using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
-using LinkDev.Talabat.Core.Domain.Entities.Products;
 using LinkDev.Talabat.Infrastructure.Persistence._Data.Generic_Repository;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence._Data
 {
     public class GenericRepositories<TEntity, TKey>(StoreDbContext _dbContext) : IGenericRepository<TEntity, TKey>
         where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>
     {
-        //private readonly StoreContext _storeContext;
-
-        //public GenericRepositories(StoreContext storeContext)
-        //{
-        //    _storeContext=storeContext;
-        //}
+       
         public async Task<IEnumerable<TEntity>> GetAllAsync(bool WithTracking = false)
         {
-
-        
-
             return WithTracking ?
             await _dbContext.Set<TEntity>().ToListAsync() :
             await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
-    
         }
       
   
     public async Task<TEntity?> GetAsync(TKey id)
         {
-    
             return await _dbContext.Set<TEntity>().FindAsync(id);
         }
-
 
         public async Task<IEnumerable<TEntity>> GetAllWithSpecAsync(ISpecifications<TEntity, TKey> spec, bool withTracking = false)
         {

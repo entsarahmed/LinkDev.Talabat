@@ -1,7 +1,5 @@
-﻿using LinkDev.Talabat.Core.Domain.Entities.Employees;
-using LinkDev.Talabat.Core.Domain.Entities.Products;
+﻿using LinkDev.Talabat.Core.Domain.Entities.Products;
 using LinkDev.Talabat.Infrastructure.Persistence._Common;
-using LinkDev.Talabat.Infrastructure.Persistence.Identity;
 using System.Reflection;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence._Data
