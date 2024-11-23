@@ -23,7 +23,7 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Products
                   
                   )
         {
-            AddInclude();
+            AddIncludes();
             
                 switch(sort)
                 {
@@ -57,12 +57,12 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Products
 
         public ProductWithBrandAndCategorySpecifications(int id):base(id) 
         {
-            AddInclude();
+            AddIncludes();
 
         }
-        private protected override void AddInclude()
+        private protected override void AddIncludes()
         {
-            base.AddInclude();
+            base.AddIncludes();
             
             Includes.Add(P => P.Brand!);
             Includes.Add(P => P.Category!);

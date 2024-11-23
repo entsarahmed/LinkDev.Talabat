@@ -61,16 +61,22 @@ namespace LinkDev.Talabat.Core.Application.Services.Orders
 
             var subTotal = orderItems.Sum(item => item.Price * item.Quantity);
 
+
+
             // 4. Map Address
 
             var address = mapper.Map<Address>(order.ShippingAddress);
+
+            //5. Get Delivery Method
+            var deliveryMethod = await unitOfWork.GetRepository<DeliveryMethod, int>().GetAsync(order.DeliveryMethodId);
+
 
             //4. Create Order
             var orderToCreate = new Order()
             {
                 BuyerEmail = buyerEmail,
                 ShippingAddress =  address,
-                DeliveryMethodId = order.DeliveryMethodId,
+                DeliveryMethod = deliveryMethod,
                 Items = orderItems,
                 Subtotal = subTotal,
 
