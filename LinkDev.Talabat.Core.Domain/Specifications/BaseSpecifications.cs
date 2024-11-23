@@ -38,7 +38,7 @@ namespace LinkDev.Talabat.Core.Domain.Specifications
         }
        
         
-        private protected virtual void AddInclude()
+        private protected virtual void AddIncludes()
         {
            
         }

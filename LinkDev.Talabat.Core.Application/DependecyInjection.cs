@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using LinkDev.Talabat.Core.Application.Abstraction.Services;
 using LinkDev.Talabat.Core.Application.Abstraction.Services.Basket;
+using LinkDev.Talabat.Core.Application.Abstraction.Services.Orders;
 using LinkDev.Talabat.Core.Application.Abstraction.Services.Products;
 using LinkDev.Talabat.Core.Application.Mapping;
 using LinkDev.Talabat.Core.Application.Services;
 using LinkDev.Talabat.Core.Application.Services.Basket;
+using LinkDev.Talabat.Core.Application.Services.Orders;
 using LinkDev.Talabat.Core.Application.Services.Products;
 using LinkDev.Talabat.Core.Domain.Contracts.Infrastructure;
 using Microsoft.Extensions.Configuration;
@@ -39,6 +41,14 @@ namespace LinkDev.Talabat.Core.Application
                 //return () => serviceProvider.GetService<IBasketService>();
             });
 
+
+            services.AddScoped(typeof(IOrderService), typeof(OrderService));
+
+            //Register the factory for Fun<IOrderService>
+            services.AddScoped(typeof(Func<IOrderService>), (serviceProvider) =>
+            {
+                return () => serviceProvider.GetRequiredService<IOrderService>();   
+            });
 
             services.AddScoped(typeof(IServiceManager), typeof(ServiceManager));
 
