@@ -29,11 +29,11 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly,
                     type => type.GetCustomAttribute<DbContextTypeAttribute>()?.DbContextType == typeof(StoreDbContext));
         }
-   
-    
-    
-    
-    
-    
+
+
+
+
+       
+
     }
 }

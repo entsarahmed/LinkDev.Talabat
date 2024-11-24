@@ -1,4 +1,5 @@
-﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
+﻿using LinkDev.Talabat.Core.Domain.Common;
+using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
 using LinkDev.Talabat.Core.Domain.Contracts.Persistence.DbInitializers;
 using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure.Persistence._Data;
@@ -19,18 +20,18 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
         {
 
             #region Store DbContext
-            services.AddDbContext<StoreDbContext>((optionsBuilder) =>
+            services.AddDbContext<StoreDbContext>((ServiceProvider, optionsBuilder) =>
                {
 
                    optionsBuilder
                    .UseLazyLoadingProxies()
-                   .UseSqlServer(configuration.GetConnectionString("StoreContext"));
-
+                   .UseSqlServer(configuration.GetConnectionString("StoreContext"))
+                   .AddInterceptors(ServiceProvider.GetRequiredService<AuditInterceptor>());
 
         }/*, contextLifetime: ServiceLifetime.Scoped, optionsLifetime: ServiceLifetime.Scoped*/); // Select context Life Time, options Life Time
 
             services.AddScoped(typeof(IStoreDbInitializer), typeof(StoreDbInitializer));
-
+            services.AddScoped(typeof(AuditInterceptor));
            // services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
 
 
