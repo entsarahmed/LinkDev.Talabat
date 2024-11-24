@@ -8,6 +8,7 @@ using LinkDev.Talabat.Core.Application.Abstraction;
 using LinkDev.Talabat.Infrastructure;
 using LinkDev.Talabat.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 namespace LinkDev.Talabat.APIs
 {
     public  class Program
@@ -22,6 +23,11 @@ namespace LinkDev.Talabat.APIs
             
             #region Configure Services
             // Add services to the container.
+
+            webApplicationBuilder.Services.AddControllers().AddNewtonsoftJson(options => {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; 
+            
+            });
 
             webApplicationBuilder.Services
                 .AddControllers()
