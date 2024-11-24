@@ -11,9 +11,10 @@ namespace LinkDev.Talabat.Core.Application.Abstraction.Services.Auth
 {
     public interface IAuthService
     {
-        Task<UserDto> LoginAsync(LoginDto model);
-        Task<UserDto> RgisterAsync(RegisterDto model);
+        Task<UserDto> LoginAsync(LoginDto loginDto);
+        Task<UserDto> RgisterAsync(RegisterDto registerDto);
         Task<UserDto> GetCurrentUser(ClaimsPrincipal claimsPrincipal);
-        Task<AddressDto> GetUserAddress(ClaimsPrincipal claimsPrincipal);
+        Task<AddressDto?> GetUserAddress(ClaimsPrincipal claimsPrincipal);
+        Task<AddressDto> UpdateUserAddress(ClaimsPrincipal claimsPrincipal, AddressDto addressDto);
     }
 }
