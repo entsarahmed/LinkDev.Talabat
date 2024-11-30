@@ -39,11 +39,11 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data.Interceptor
             {
                 if (entry.State is EntityState.Added)
                 {
-                    entry.Entity.CreatedBy=_loggedInUserService.UserId!;
+                    entry.Entity.CreatedBy=_loggedInUserService.UserId! ?? "Entsar";
                     entry.Entity.CreatedOn=DateTime.UtcNow;
 
                 }
-                entry.Entity.LastModifiedBy=_loggedInUserService.UserId!;
+                entry.Entity.LastModifiedBy=_loggedInUserService.UserId! ?? "Entsar";
                 entry.Entity.LastModifiedOn = DateTime.UtcNow;
 
 

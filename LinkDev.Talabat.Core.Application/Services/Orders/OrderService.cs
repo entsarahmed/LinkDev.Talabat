@@ -21,6 +21,10 @@ namespace LinkDev.Talabat.Core.Application.Services.Orders
         {
             //1. Get Basket From Baskets Repo
             var basket = await basketService.GetCustomerBasketAsync(order.BasketId);
+            //if (basket == null || basket.Items == null || basket.Items.Any())
+            //{
+            //    throw new BadRequestException("Basket not found or empty");
+            //}
 
 
             //2. Get Selected Items at Basket From Products Repo
@@ -76,9 +80,10 @@ namespace LinkDev.Talabat.Core.Application.Services.Orders
             {
                 BuyerEmail = buyerEmail,
                 ShippingAddress =  address,
-                DeliveryMethod = deliveryMethod,
                 Items = orderItems,
                 Subtotal = subTotal,
+                DeliveryMethodId = order.DeliveryMethodId,
+
 
             };
             await unitOfWork.GetRepository<Order, int>().AddAsync(orderToCreate);
@@ -94,8 +99,8 @@ namespace LinkDev.Talabat.Core.Application.Services.Orders
 
         public async Task<IEnumerable<OrderToReturnDto>> GetOrderForUserAsync(string buyerEmail)
         {
-            var orderSpec = new OrderSpecification(buyerEmail);
-            var orders = await unitOfWork.GetRepository<Order,int>().GetAllWithSpecAsync(orderSpec);
+            var orderSpecs = new OrderSpecification(buyerEmail);
+            var orders = await unitOfWork.GetRepository<Order,int>().GetAllWithSpecAsync(orderSpecs);
 
             return mapper.Map<IEnumerable<OrderToReturnDto>>(orders);
         
