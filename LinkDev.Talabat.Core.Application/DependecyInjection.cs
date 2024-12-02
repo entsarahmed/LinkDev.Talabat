@@ -24,9 +24,8 @@ namespace LinkDev.Talabat.Core.Application
            // services.AddAutoMapper(Mapper => Mapper.AddProfile(new MappingProfile()));
             services.AddAutoMapper(typeof(MappingProfile));
 
-            services.AddScoped(typeof(IServiceManager), typeof(ServiceManager));
 
-            //services.AddScoped(typeof(IBasketService), typeof(BasketService));
+            services.AddScoped(typeof(IBasketService), typeof(BasketService));
             //services.AddScoped(typeof(Func<IBasketService>), typeof(Func<BasketService>));
             
             services.AddScoped(typeof(Func<IBasketService>), (serviceProvider) =>
@@ -36,7 +35,13 @@ namespace LinkDev.Talabat.Core.Application
                 var basketRepository = serviceProvider.GetRequiredService<IBasketRepository>();
 
                 return () => new BasketService(basketRepository,mapper,configuration);
+
+                //return () => serviceProvider.GetService<IBasketService>();
             });
+
+
+            services.AddScoped(typeof(IServiceManager), typeof(ServiceManager));
+
             return services;
         }
     }

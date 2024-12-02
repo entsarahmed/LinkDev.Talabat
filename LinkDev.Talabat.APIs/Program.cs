@@ -44,24 +44,9 @@ namespace LinkDev.Talabat.APIs
                         });
                     };
                 })
-                .AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly);
-            // Register Required Service by ASP.NET Core with APIs to DI Container.
-            // 
-            //webApplicationBuilder.Services.Configure<ApiBehaviorOptions>(options =>
-            //{
-            //    options.SuppressModelStateInvalidFilter = false;
-            //    options.InvalidModelStateResponseFactory = (actionContext) =>
-            //    {
-            //        var errors = actionContext.ModelState.Where(P => P.Value!.Errors.Count > 0)
-            //                               .SelectMany(P => P.Value!.Errors)
-            //                               .Select(E => E.ErrorMessage);
-            //        return new BadRequestObjectResult(new ApiValidationErrorResponse()
-            //        {
-
-            //            Errors = errors
-            //        });
-            //    };
-            //});
+                .AddApplicationPart(typeof(Controllers.AssemblyInformation).Assembly);  // Register Required Service by ASP.NET Core with APIs to DI Container.
+           
+          
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             webApplicationBuilder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
@@ -71,13 +56,11 @@ namespace LinkDev.Talabat.APIs
             webApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService),typeof(LoggedInUserService));
 
 
-            webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
-            //DependenecyInjection.AddPersistenceServices(webApplicationBuilder.Services,webApplicationBuilder.Configuration);
-
             webApplicationBuilder.Services.AddApplicationServices();
-
+            webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
             webApplicationBuilder.Services.AddInfrastructureServices(webApplicationBuilder.Configuration);
 
+            webApplicationBuilder.Services.AddIdentityServices(webApplicationBuilder.Configuration);
             #endregion
 
             var app = webApplicationBuilder.Build();
@@ -103,7 +86,7 @@ namespace LinkDev.Talabat.APIs
 
             #region Database Initialization
 
-          await  app.InitializerStoreContextAsync();
+          await  app.InitializerDbAsync();
 
             #endregion
 
@@ -129,7 +112,7 @@ namespace LinkDev.Talabat.APIs
             app.UseStatusCodePagesWithReExecute("/Errors/{0}");
 
             app.UseAuthentication();
-           app.UseAuthorization();
+            app.UseAuthorization();
             
 
 

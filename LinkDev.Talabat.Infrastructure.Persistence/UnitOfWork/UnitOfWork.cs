@@ -1,5 +1,5 @@
 ﻿using LinkDev.Talabat.Core.Domain.Common;
-using LinkDev.Talabat.Core.Domain.Contracts;
+using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using LinkDev.Talabat.Infrastructure.Persistence._Data;
 using System;
@@ -13,10 +13,10 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly StoreContext _dbContext;
+        private readonly StoreDbContext _dbContext;
         private readonly ConcurrentDictionary<string, object> _repositories;
        
-        public UnitOfWork(StoreContext dbContext)
+        public UnitOfWork(StoreDbContext dbContext)
         {
             _dbContext = dbContext;
             _repositories = new();

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Core.Application.Services.Basket
 {
-    internal class BasketService(IBasketRepository basketRepository,IMapper mapper,IConfiguration configuration ) : IBasketService
+    public class BasketService(IBasketRepository basketRepository,IMapper mapper,IConfiguration configuration ) : IBasketService
     {
         public async Task<CustomerBasketDto> GetCustomerBasketAsync(string basketId)
         {
@@ -27,14 +27,20 @@ namespace LinkDev.Talabat.Core.Application.Services.Basket
             var basket = mapper.Map<CustomerBasket>(basketDto);
             var timeToLive = TimeSpan.FromDays(double.Parse(configuration.GetSection("RedisSettings")["TimeToLiveInDays"]!));
             var UpdatedBasket = await basketRepository.UpdateAsync(basket, timeToLive);
-            if (UpdatedBasket is null) throw new BadRequestException("can't update, there is a problem with this basket");
-             return basketDto;
+            if (UpdatedBasket is null) throw new BadRequestException("can't update, there is a problem with this basket")
+            {
+                Errors = new List<string>() // Or provide relevant error details here
+            };
+            return basketDto;
             
         }
         public async Task DeleteCustomerBasketAsync(string basketId)
         {
           var deleted= await basketRepository.DeleteAsync(basketId);
-            if (!deleted) throw new BadRequestException("unable to delete this basket.");
+            if (!deleted) throw new BadRequestException("unable to delete this basket.")
+            {
+                Errors = new List<string>() // Or provide relevant error details here
+            };
         }
 
 

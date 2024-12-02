@@ -1,24 +1,31 @@
-﻿using LinkDev.Talabat.Infrastructure.Persistence;
+﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence.DbInitializers;
 
 namespace LinkDev.Talabat.APIs.Extensions
 {
     public static class InitializerExtensions
     {
-        public static async Task<WebApplication> InitializerStoreContextAsync(this WebApplication app)
+        public static async Task<WebApplication> InitializerDbAsync(this WebApplication app)
         {
             using var scope = app.Services.CreateAsyncScope();
             var services = scope.ServiceProvider;
 
-            var StoreContextInitializer = services.GetRequiredService<StoreContext>();
+            var storeContextInitializer = services.GetRequiredService<IStoreDbInitializer>();
+            var IdentityContextInitializer = services.GetRequiredService<IStoreIdentityDbInitializer>();
             //Ask Runtime Env for an Object from "StoreContext" Service Explicitly.
+
 
             var loggerFactory = services.GetRequiredService<ILoggerFactory>();
             //var logger = services.GetRequiredService<ILogger<Program>>();
 
             try
             {
-                await StoreContextInitializer.InitializeAsync();
-                await StoreContextInitializer.SeedAsync();
+                await storeContextInitializer.InitializeAsync();
+                await storeContextInitializer.SeedAsync();
+               
+                await IdentityContextInitializer.InitializeAsync();
+                await IdentityContextInitializer.SeedAsync();
+
+
             }
             catch (Exception ex)
             {
@@ -27,5 +34,9 @@ namespace LinkDev.Talabat.APIs.Extensions
             }
             return app;
         }
+
+
+
+
     }
 }

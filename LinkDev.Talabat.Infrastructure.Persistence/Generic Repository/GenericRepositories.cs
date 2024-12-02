@@ -1,5 +1,6 @@
 ﻿using LinkDev.Talabat.Core.Domain.Common;
 using LinkDev.Talabat.Core.Domain.Contracts;
+using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using LinkDev.Talabat.Infrastructure.Persistence._Data.Generic_Repository;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence._Data
 {
-    public class GenericRepositories<TEntity, TKey>(StoreContext _dbContext) : IGenericRepository<TEntity, TKey>
+    public class GenericRepositories<TEntity, TKey>(StoreDbContext _dbContext) : IGenericRepository<TEntity, TKey>
         where TEntity : BaseEntity<TKey> where TKey : IEquatable<TKey>
     {
         //private readonly StoreContext _storeContext;
