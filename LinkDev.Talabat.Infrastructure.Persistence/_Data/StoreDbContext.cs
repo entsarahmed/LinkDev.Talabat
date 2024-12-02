@@ -1,4 +1,9 @@
+ Session07
+﻿using LinkDev.Talabat.Core.Domain.Entities.Employees;
+using LinkDev.Talabat.Core.Domain.Entities.Orders;
+using LinkDev.Talabat.Core.Domain.Entities.Products;
 ﻿using LinkDev.Talabat.Core.Domain.Entities.Products;
+Dev
 using LinkDev.Talabat.Infrastructure.Persistence._Common;
 using System.Reflection;
 
@@ -9,11 +14,10 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data
         public DbSet<Product> products { get; set; }
         public DbSet<ProductBrand> Brands { get; set; }
         public DbSet<ProductCategory> categories { get; set; }
-        // DbSet for Employee entity
-      //  public DbSet<Employee> Employees { get; set; }
-
-        // DbSet for Department entity
-       // public DbSet<Department> Departments { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 
         public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options)
         {
@@ -21,26 +25,18 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data
 
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+         //   base.OnModelCreating(builder);
 
-            builder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly,
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly,
                     type => type.GetCustomAttribute<DbContextTypeAttribute>()?.DbContextType == typeof(StoreDbContext));
         }
 
-        //public async Task InitializeAsync()
-        //{
-        //    // This will apply any pending migrations
-        //    if (Database.GetPendingMigrations().Any())
-        //    {
-        //        await Database.MigrateAsync();
-        //    }
-        //}
 
-        //public Task SeedAsync()
-        //{
-        //    throw new NotImplementedException();
-        //}
+
+
+       
+
     }
 }

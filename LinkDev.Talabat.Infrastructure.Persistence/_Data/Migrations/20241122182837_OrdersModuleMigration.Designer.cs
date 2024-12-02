@@ -4,6 +4,7 @@ using LinkDev.Talabat.Infrastructure.Persistence._Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20241122182837_OrdersModuleMigration")]
+    partial class OrdersModuleMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +53,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeliveryMethods", (string)null);
+                    b.ToTable("DeliveryMethods");
                 });
 
             modelBuilder.Entity("LinkDev.Talabat.Core.Domain.Entities.Orders.Order", b =>
@@ -100,7 +103,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.HasIndex("DeliveryMethodId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("LinkDev.Talabat.Core.Domain.Entities.Orders.OrderItem", b =>
@@ -138,7 +141,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("LinkDev.Talabat.Core.Domain.Entities.Products.Product", b =>
@@ -195,7 +198,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("products", (string)null);
+                    b.ToTable("products");
                 });
 
             modelBuilder.Entity("LinkDev.Talabat.Core.Domain.Entities.Products.ProductBrand", b =>
@@ -230,7 +233,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Brands", (string)null);
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("LinkDev.Talabat.Core.Domain.Entities.Products.ProductCategory", b =>
@@ -262,7 +265,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("categories", (string)null);
+                    b.ToTable("categories");
                 });
 
             modelBuilder.Entity("LinkDev.Talabat.Core.Domain.Entities.Orders.Order", b =>
@@ -272,7 +275,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                         .HasForeignKey("DeliveryMethodId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.OwnsOne("LinkDev.Talabat.Core.Domain.Entities.Orders.Order.ShippingAddress#LinkDev.Talabat.Core.Domain.Entities.Orders.Address", "ShippingAddress", b1 =>
+                    b.OwnsOne("LinkDev.Talabat.Core.Domain.Entities.Orders.Address", "ShippingAddress", b1 =>
                         {
                             b1.Property<int>("OrderId")
                                 .HasColumnType("int");
@@ -299,7 +302,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Addresses", (string)null);
+                            b1.ToTable("Orders");
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
@@ -318,7 +321,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.OwnsOne("LinkDev.Talabat.Core.Domain.Entities.Orders.OrderItem.Product#LinkDev.Talabat.Core.Domain.Entities.Orders.ProductItemOrdered", "Product", b1 =>
+                    b.OwnsOne("LinkDev.Talabat.Core.Domain.Entities.Orders.ProductItemOrdered", "Product", b1 =>
                         {
                             b1.Property<int>("OrderItemId")
                                 .HasColumnType("int");
@@ -336,7 +339,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
                             b1.HasKey("OrderItemId");
 
-                            b1.ToTable("OrderItems", (string)null);
+                            b1.ToTable("OrderItems");
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderItemId");

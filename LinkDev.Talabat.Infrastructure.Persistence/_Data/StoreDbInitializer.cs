@@ -1,4 +1,5 @@
 ﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence.DbInitializers;
+using LinkDev.Talabat.Core.Domain.Entities.Orders;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using LinkDev.Talabat.Infrastructure.Persistence._Common;
 using System.Text.Json;
@@ -64,6 +65,27 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data
 
 
             }
+
+            if (!_dbContext.DeliveryMethods.Any())
+            {
+                var deliveryMethodData = await File.ReadAllTextAsync("../LinkDev.Talabat.Infrastructure.Persistence/_Data/Seeds/delivery.json");//("F:\\route.net\\course\\API\\Session01\\Demo\\LinkDev.Talabat\\LinkDev.Talabat.Infrastructure.Persistence\\Seeds\\products.json");   //("../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/brands.json");                var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandData);
+
+                var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryMethodData);
+
+                if (deliveryMethods?.Count > 0)
+                {
+
+
+                    await _dbContext.Set<DeliveryMethod>().AddRangeAsync(deliveryMethods);
+
+                    await _dbContext.SaveChangesAsync();
+
+                }
+
+
+            }
+
+
 
         }
     }

@@ -1,13 +1,9 @@
 ﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
 using LinkDev.Talabat.Core.Domain.Contracts.Persistence.DbInitializers;
-using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure.Persistence._Data;
 using LinkDev.Talabat.Infrastructure.Persistence._Data.Interceptor;
 using LinkDev.Talabat.Infrastructure.Persistence._Identity;
-using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using LinkDev.Talabat.Infrastructure.Persistence.Identity;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,19 +15,19 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
         {
 
             #region Store DbContext
-            services.AddDbContext<StoreDbContext>((optionsBuilder) =>
-               {
+            services.AddDbContext<StoreDbContext>((ServiceProvider, optionsBuilder) =>
+             {
 
-                   optionsBuilder
-                   .UseLazyLoadingProxies()
-                   .UseSqlServer(configuration.GetConnectionString("StoreContext"));
+                 optionsBuilder
+                 .UseLazyLoadingProxies()
+                 .UseSqlServer(configuration.GetConnectionString("StoreContext"))
+                  .AddInterceptors(ServiceProvider.GetRequiredService<AuditInterceptor>());
 
-
-        }/*, contextLifetime: ServiceLifetime.Scoped, optionsLifetime: ServiceLifetime.Scoped*/); // Select context Life Time, options Life Time
+             }/*, contextLifetime: ServiceLifetime.Scoped, optionsLifetime: ServiceLifetime.Scoped*/); // Select context Life Time, options Life Time
 
             services.AddScoped(typeof(IStoreDbInitializer), typeof(StoreDbInitializer));
-
-            services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
+            services.AddScoped(typeof(AuditInterceptor));
+           // services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CustomSaveChangesInterceptor));
 
 
             #endregion

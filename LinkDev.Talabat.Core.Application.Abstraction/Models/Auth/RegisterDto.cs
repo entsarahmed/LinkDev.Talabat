@@ -19,9 +19,9 @@ namespace LinkDev.Talabat.Core.Application.Abstraction.Models.Auth
         public required string Email { get; set; }
         [Required]
         public required string Phone { get; set; }
+        
         [Required]
-        [RegularExpression(@"^(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$",
-                      ErrorMessage = "Invalid email address format.")]
+        
         public required string Password { get; set; }
     
     }
