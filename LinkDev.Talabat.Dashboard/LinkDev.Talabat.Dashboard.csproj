@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\site.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LinkDev.Talabat.APIs\LinkDev.Talabat.APIs.csproj" />
     <ProjectReference Include="..\LinkDev.Talabat.Infrastructure.Persistence\LinkDev.Talabat.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\LinkDev.Talabat.Infrastructure\LinkDev.Talabat.Infrastructure.csproj" />

@@ -67,7 +67,7 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
                 Id = user.Id,
                 DisplayName = user.DisplayName,
                 Email = user.Email!,
-                Token = await GenerateTokenAsync(user), 
+                Token = await GenerateTokenAsync(user),
             };
 
             return response;

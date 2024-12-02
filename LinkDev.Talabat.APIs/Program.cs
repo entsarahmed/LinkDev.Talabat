@@ -10,7 +10,7 @@ using LinkDev.Talabat.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 namespace LinkDev.Talabat.APIs
 {
-    public class Program
+    public  class Program
     {
        // public static StoreContext StoreContext { get; set; } = null!;
         // Entry Point
