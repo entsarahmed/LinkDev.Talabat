@@ -16,13 +16,20 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Orders
         {
             AddIncludes();
         }
+        
         public OrderSpecification(string buyerEmail)
           : base(order => order.BuyerEmail == buyerEmail)
         {
             AddIncludes();
             AddOrderByDesc(order => order.OrderDate);
         }
-       
+        public OrderSpecification(string paymentIntentId)
+            :base(order => order.PaymentIntentId == paymentIntentId)
+        {
+            
+
+        }
+
         private protected override void AddIncludes()
         {
             base.AddIncludes();

@@ -3,6 +3,7 @@ using LinkDev.Talabat.Core.Application.Abstraction.Models.Orders;
 using LinkDev.Talabat.Core.Application.Abstraction.Services.Basket;
 using LinkDev.Talabat.Core.Application.Abstraction.Services.Orders;
 using LinkDev.Talabat.Core.Application.Exceptions;
+using LinkDev.Talabat.Core.Domain.Contracts.Infrastructure;
 using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
 using LinkDev.Talabat.Core.Domain.Entities.Orders;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Core.Application.Services.Orders
 {
-   internal class OrderService(IUnitOfWork unitOfWork, IMapper mapper, IBasketService basketService) : IOrderService
+   internal class OrderService(IUnitOfWork unitOfWork, IMapper mapper, IBasketService basketService, IPaymentService paymentService) : IOrderService
     {
         public async Task<OrderToReturnDto> CreateOrderAsync(string buyerEmail, OrderToCreateDto order)
         {
@@ -76,6 +77,20 @@ namespace LinkDev.Talabat.Core.Application.Services.Orders
 
 
             //4. Create Order
+
+            var orderRepo = unitOfWork.GetRepository<Order, int>();
+
+            var orderSpecs = new OrderByPaymentIntentSpecifications(basket.PaymentIntentId!);
+
+            var existingOrder = await orderRepo.GetWithSpecAsync(orderSpecs);
+
+
+            if(existingOrder is not null)
+            {
+                orderRepo.Delete(existingOrder);
+                await paymentService.CreateOrUpdatePaymentIntent(basket.Id);
+            }
+
             var orderToCreate = new Order()
             {
                 BuyerEmail = buyerEmail,
@@ -83,6 +98,7 @@ namespace LinkDev.Talabat.Core.Application.Services.Orders
                 Items = orderItems,
                 Subtotal = subTotal,
                 DeliveryMethodId = order.DeliveryMethodId,
+                PaymentIntentId = basket.PaymentIntentId!
 
 
             };
