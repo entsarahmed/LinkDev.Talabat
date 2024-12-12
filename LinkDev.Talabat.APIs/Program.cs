@@ -57,8 +57,20 @@ namespace LinkDev.Talabat.APIs
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             webApplicationBuilder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
 
-
+            
             webApplicationBuilder.Services.AddHttpContextAccessor();
+
+            webApplicationBuilder.Services.AddCors(corsOptions =>
+            {
+                corsOptions.AddPolicy("TalabatPolicy", policyBuilder =>
+                {
+                    policyBuilder.AllowAnyHeader().AllowAnyMethod().WithOrigins(webApplicationBuilder.Configuration["Urls:FrontBaseUrl"]!);
+                });
+            });
+
+            
+            
+            
             webApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService),typeof(LoggedInUserService));
 
 
@@ -113,6 +125,10 @@ namespace LinkDev.Talabat.APIs
             }
 
             app.UseStaticFiles();
+
+            app.UseCors("TalabatPolicy");
+
+
             app.UseHttpsRedirection();
 
             app.UseStatusCodePagesWithReExecute("/Errors/{0}");
