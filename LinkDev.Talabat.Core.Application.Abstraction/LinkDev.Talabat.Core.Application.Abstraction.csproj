@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LinkDev.Talabat.Core.Domain\LinkDev.Talabat.Core.Domain.csproj" />
+    <ProjectReference Include="..\LinkDev.Talabat.Shared\LinkDev.Talabat.Shared.csproj" />
   </ItemGroup>
 
 </Project>

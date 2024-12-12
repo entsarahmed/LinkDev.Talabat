@@ -23,12 +23,12 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Orders
             AddIncludes();
             AddOrderByDesc(order => order.OrderDate);
         }
-        public OrderSpecification(string paymentIntentId)
-            :base(order => order.PaymentIntentId == paymentIntentId)
-        {
+        //public OrderSpecification(string paymentIntentId)
+        //    :base(order => order.PaymentIntentId == paymentIntentId)
+        //{
             
 
-        }
+        //}
 
         private protected override void AddIncludes()
         {

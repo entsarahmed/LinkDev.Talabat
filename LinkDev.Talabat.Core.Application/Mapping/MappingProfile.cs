@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Castle.Core.Configuration;
 using LinkDev.Talabat.Core.Application.Abstraction.Models._Common;
-using LinkDev.Talabat.Core.Application.Abstraction.Models.Basket;
 using LinkDev.Talabat.Core.Application.Abstraction.Models.Orders;
 using LinkDev.Talabat.Core.Application.Abstraction.Models.Products;
 using LinkDev.Talabat.Core.Application.Abstraction.Services.Employees;
@@ -18,6 +17,7 @@ using System.Threading.Tasks;
 
 using UserAddress = LinkDev.Talabat.Core.Domain.Entities.Identity.Address;
 using OrderAddress = LinkDev.Talabat.Core.Domain.Entities.Orders.Address;
+using LinkDev.Talabat.Shared.Models.Basket;
 
 
 namespace LinkDev.Talabat.Core.Application.Mapping
