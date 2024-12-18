@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinkDev.Talabat.Core.Domain.Contracts.Infrastructure
+namespace LinkDev.Talabat.Core.Application.Abstraction.Common.Contracts.Infrastructure
 {
     public interface IPaymentService
     {

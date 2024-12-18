@@ -1,6 +1,5 @@
 ﻿using LinkDev.Talabat.APIs.Controllers.Base;
 using LinkDev.Talabat.APIs.Controllers.Errors;
-using LinkDev.Talabat.Core.Application.Exceptions;
 using LinkDev.Talabat.Core.Application.Abstraction.Models.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

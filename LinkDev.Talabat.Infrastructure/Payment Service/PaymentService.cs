@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Castle.Core.Logging;
+using LinkDev.Talabat.Core.Application.Abstraction.Common.Contracts.Infrastructure;
 using LinkDev.Talabat.Core.Application.Exceptions;
 using LinkDev.Talabat.Core.Domain.Contracts.Infrastructure;
 using LinkDev.Talabat.Core.Domain.Contracts.Persistence;

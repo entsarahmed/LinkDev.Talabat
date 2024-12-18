@@ -37,13 +37,16 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Data.Interceptor
    .Where(entity => entity.State is EntityState.Added or EntityState.Modified);
             foreach (var entry in entries)
             {
+                if (string.IsNullOrEmpty(_loggedInUserService.UserId))
+                    _loggedInUserService.UserId = "";
+                        
                 if (entry.State is EntityState.Added)
                 {
-                    entry.Entity.CreatedBy=_loggedInUserService.UserId! ?? "Entsar";
+                    entry.Entity.CreatedBy=_loggedInUserService.UserId!;
                     entry.Entity.CreatedOn=DateTime.UtcNow;
 
                 }
-                entry.Entity.LastModifiedBy=_loggedInUserService.UserId! ?? "Entsar";
+                entry.Entity.LastModifiedBy=_loggedInUserService.UserId!;
                 entry.Entity.LastModifiedOn = DateTime.UtcNow;
 
 

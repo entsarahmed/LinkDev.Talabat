@@ -1,4 +1,5 @@
 ﻿using LinkDev.Talabat.APIs.Controllers.Base;
+using LinkDev.Talabat.Core.Application.Abstraction.Common.Contracts.Infrastructure;
 using LinkDev.Talabat.Core.Domain.Contracts.Infrastructure;
 using LinkDev.Talabat.Shared.Models.Basket;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +20,7 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Payment
             return Ok(result);
         }
 
-        [HttpPost("webhook")]
+        [HttpPost("api/payment/webhook")]
         public async Task<IActionResult> WebHook()
         {
             var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
