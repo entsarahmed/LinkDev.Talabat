@@ -1,4 +1,5 @@
 ﻿using LinkDev.Talabat.APIs.Controllers.Base;
+using LinkDev.Talabat.APIs.Controllers.Controllers.Filters;
 using LinkDev.Talabat.Core.Application.Abstraction.Common;
 using LinkDev.Talabat.Core.Application.Abstraction.Models.Products;
 using LinkDev.Talabat.Core.Application.Abstraction.Services;
@@ -10,6 +11,7 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
 {
     public class ProductsController(IServiceManager serviceManager) : BaseApiController
     {
+        [Cached(600)]
         //[Authorize]
         [HttpGet] // GET: /api/products
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetAllProducts([FromQuery]ProductSpecParams specParams)

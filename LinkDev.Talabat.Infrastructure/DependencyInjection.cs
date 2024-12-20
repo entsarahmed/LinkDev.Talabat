@@ -1,6 +1,7 @@
 ﻿using LinkDev.Talabat.Core.Application.Abstraction.Common.Contracts.Infrastructure;
 using LinkDev.Talabat.Core.Domain.Contracts.Infrastructure;
 using LinkDev.Talabat.Infrastructure.Basket_Repository;
+using LinkDev.Talabat.Infrastructure.Cache__Service;
 using LinkDev.Talabat.Infrastructure.Payment_Service;
 using LinkDev.Talabat.Shared.Models;
 using Microsoft.Extensions.Configuration;
@@ -27,9 +28,12 @@ namespace LinkDev.Talabat.Infrastructure
             //    return connectionMultiplexerObj;
             //});
 
+            services.AddSingleton(typeof(IResponseCacheService), typeof(ResponseCacheService));
+
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
             services.AddScoped(typeof(IPaymentService), typeof(PaymentService));
 
+            
 
 
             services.Configure<RedisSettings>(configuration.GetSection("RedisSettings"));
